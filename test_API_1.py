@@ -81,13 +81,6 @@ def test_update_booking(booking_id, auth_token):
     assert response_data['totalprice'] == payload['totalprice']
     assert response_data['additionalneeds'] == payload['additionalneeds']
 
-def test_delete_booking(booking_id, auth_token):
-    headers = {'Cookie': f'token={auth_token}'}
-    response = requests.delete(f'{BASE_URL}/{booking_id}', headers=headers)
-    assert response.status_code == 201
-    response_get = requests.get(f'{BASE_URL}/{booking_id}')
-    assert response_get.status_code == 404
-
 def test_update_current_booking(booking_id, auth_token):
     payload = {
             "firstname": "James",
@@ -100,4 +93,13 @@ def test_update_current_booking(booking_id, auth_token):
     response_data = response_get.json()
     assert response_data['firstname'] == payload['firstname']
     assert response_data['lastname'] == payload['lastname']
+
+
+def test_delete_booking(booking_id, auth_token):
+    headers = {'Cookie': f'token={auth_token}'}
+    response = requests.delete(f'{BASE_URL}/{booking_id}', headers=headers)
+    assert response.status_code == 201
+    response_get = requests.get(f'{BASE_URL}/{booking_id}')
+    assert response_get.status_code == 404
+
 
